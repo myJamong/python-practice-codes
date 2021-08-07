@@ -1,6 +1,6 @@
 from decimal import Decimal
 from time import perf_counter
-from datetime import  datetime
+from datetime import datetime
 
 class Timer():
     def __init__(self, task_name):
