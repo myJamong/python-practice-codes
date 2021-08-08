@@ -21,10 +21,18 @@
         - Guido: only remove GIL if new code does not decrease the performance of a single-threaded program
         - Cpython and PyPy thing! Jython and IronPython do not use GIL
     
-# asyncio
+## Threading
+- Most programs spend a lot of time waiting for I/O
+- Threads allow you to time slice your computation, doing processing work while waiting
+- Threads work within the GIL
+- Significant speed-up can result for disk or network heavy software
+
+## asyncio
 asyncio는 async/await 문법을 사용해서 병행성 코드(concurrent code)를 작성할 수 있고 IO bound application에서 주로 사용하는 라이브러리이다.
 
 application이 느리고, 느린 이유가 잦은 I/O로 인한 경우라면... asyncio로 성능을 확실히 개선할 수 있다.
+
+Event loop와 coroutine을 사용하는데 Event loop는 Python 내부에 발생되는 작업에 대한 순서를 제어하는 메인 Loop가 있다.
 
 ---
 
@@ -35,3 +43,22 @@ application이 느리고, 느린 이유가 잦은 I/O로 인한 경우라면... 
 - 파일 시스템 I/O
 
 Python의 프로그램 내부가 아닌... 외부의 통신에 있어서 속도가 느린 경우 사용될 수 있다.
+
+---
+asyncio는 두가지 built-in keyword를 사용한다.
+- async : indicates that code is to be run asynchronously
+- await : the cooperative signal that your coroutine is willing to give up execution control.
+
+asyncoc Library 주의 사항
+- Python 3.4에서 소개되었다.
+- asyncio still fairly new
+- Libraries are just starting to take advantage of it
+    - Instead of "requests", need "aiphttp"
+  ---
+
+## Thread vs asyncio
+둘다 I/O-bound에 대한 처리를 위해 사용
+- asyncio는 python에서 제어가 되고 동시성에 오버헤드가 비교적 적다.
+- coding with asyncio is slightly more complicated
+- asyncio is still new
+- asyncio is Co-operative vs Threads are pre-emptive multitasking
